@@ -24,11 +24,21 @@ enum Command {
 }
 
 mod my_module {
+    use std::result;
+
     use super::Command;
 
     // TODO: Complete the function as described above.
     pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> { 
-         vec!["test".to_string(),"test".to_string()]
+        let mut results = Vec::new();
+        for (str, command) in input.iter() {
+            match command {
+                Command::Uppercase => results.push(str.to_uppercase()),
+                Command::Trim => results.push(str.trim().to_string()),
+                Command::Append(n) => results.push(str.to_owned() + &"bar".repeat(*n))
+            }
+        }
+        results
     }
 }
 
