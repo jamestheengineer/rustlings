@@ -11,37 +11,22 @@
 // Make the necessary code changes in the struct `ReportCard` and the impl
 // block to support alphabetical report cards in addition to numerical ones.
 
-use core::fmt;
-
 // TODO: Adjust the struct as described above.
-enum Grade {
-    Numeric(f32),
-    Alpha(String)
+use std::fmt::Display;
+
+pub struct ReportCard<T> {
+    pub grade: T,
+    pub student_name: String,
+    pub student_age: u8,
 }
 
-impl std::fmt::Display for Grade {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Grade::Numeric(fvar) => {write!(f, "{}", fvar)},
-            Grade::Alpha(str_var)=> {write!(f, "{}", str_var)},
-        }
+impl<T: Display> ReportCard<T> {
+    pub fn print(&self) -> String {
+        format!("{} ({}) - achieved a grade of {}",
+            &self.student_name, &self.student_age, &self.grade)
     }
-}
-struct ReportCard {
-    grade: Grade,
-    student_name: String,
-    student_age: u8,
 }
 
-// TODO: Adjust the impl block as described above.
-impl ReportCard {
-    fn print(&self) -> String {
-        format!(
-            "{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade,
-        )
-    }
-}
 
 fn main() {
     // You can optionally experiment here.
@@ -54,7 +39,7 @@ mod tests {
     #[test]
     fn generate_numeric_report_card() {
         let report_card = ReportCard {
-            grade: Grade::Numeric(2.1),
+            grade: 2.1,
             student_name: "Tom Wriggle".to_string(),
             student_age: 12,
         };
@@ -67,7 +52,7 @@ mod tests {
     #[test]
     fn generate_alphabetic_report_card() {
         let report_card = ReportCard {
-            grade: Grade::Alpha("A+".to_string()),
+            grade: "A+",
             student_name: "Gary Plotter".to_string(),
             student_age: 11,
         };
